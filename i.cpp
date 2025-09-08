@@ -2,47 +2,38 @@
 using namespace std;
 
 int main() {
-    deque<int>dq;
-    vector<string>v;
+    int n;
+    string s;
+    cin >> n >> s;
 
-    while(true){
-        string result;
-        char c;
-        cin >> c;
-        if (c=='!'){
-            break;
-        }
+    queue <int> q1;
+    queue <int> q2;
 
-        int n;
-        if (c=='+'){
-            cin >> n;
-            dq.push_front(n);
+    for (int i = 0; i<n; i++){
+        if (s[i]=='K'){
+            q1.push(i);
+        }else{
+            q2.push(i);
         }
-        if (c=='-'){
-            cin >> n;
-            dq.push_back(n);
+    }
+    while(!q1.empty() && !q2.empty()){
+        int i1 = q1.front();
+        int i2 = q2.front();
+        q1.pop();
+        q2.pop();
+        if(i1<i2){
+            q1.push(i1 + n);
+        }else{
+            q2.push(i2 + n);
         }
-
-        if (c=='*' && dq.size()>=1) {
-            result = to_string(dq.front() + dq.back());
-            if (dq.size()==1) {
-                dq.pop_front();
-            }
-            else{
-                dq.pop_front();
-                dq.pop_back();
-            }
-            v.push_back(result);
-        }
-        else if (dq.empty()){
-            v.push_back("error");
-        }
-        
-        
-
-
     }
 
-    for (int i = 0; i<v.size(); i++){
-        cout << v[i] << endl;
+    if (!q1.empty()){
+        cout << "KATSURAGI";
+    }else{
+        cout << "SAKAYANAGI";
     }
+   
+
+    return 0;
+}

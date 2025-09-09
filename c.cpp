@@ -1,35 +1,38 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-string process(string str) {
-    stack <char> st;
-    for (char c : str) {
-        if (c == '#') {
-            if (!st.empty()){
-                st.pop();
-            }
-        } else {
-            st.push(c);
+string func(string str){
+    string s;
+    deque<char> q;
+    for(char c: str){
+        if(c=='#'){
+            q.pop_front();
+        }
+        if (c!='#'){
+            q.push_front(c);          
         }
     }
-
-    string res = "";
-    while (!st.empty()) {
-        res += st.top();
-        st.pop();
+    while(!q.empty()){
+        s+=q.front();
+        q.pop_front();
     }
-    reverse(res.begin(), res.end());
-    return res;
+
+    return s;
 }
 
-int main() {
-    string str1, str2;
-    cin >> str1 >> str2;
 
-    if (process(str1) == process(str2))
+int main() {
+    string s1;
+    string s2;
+    cin >> s1 >> s2;
+
+    if(func(s1)==func(s2)){
         cout << "Yes";
-    else
+    }else{
         cout << "No";
+    }
+
+
 
     return 0;
 }

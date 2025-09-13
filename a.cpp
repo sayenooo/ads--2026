@@ -2,44 +2,35 @@
 using namespace std;
 
 int main() {
-    int t,t1;
-    cin >> t;
-    t1 = t;
+    int t;
+    cin >> t;036
     vector<int> v;
-    vector<int> nums;
-    deque<int> dq;
-
-    while(t--){
+    vector<int> s;
+    while (t--) {
         int n;
         cin >> n;
-        nums.push_back(n);
+        s.push_back(n);
+        deque<int> dq;
 
-        for (int i = n; i>0; i--){
-            dq.push_back(i);
-            for (int j = 0; j<=i; j++){
+        for (int j = n; j >= 1; --j) {
+            dq.push_front(j);
+            for (int k = 0; k < j; ++k) {
                 dq.push_front(dq.back());
                 dq.pop_back();
             }
         }
+
         while(!dq.empty()){
             v.push_back(dq.front());
             dq.pop_front();
         }
-
-        }
-        
-
-    int j = 0;
-    int aa = 0;
-    while (t1--) {
-        int n = nums[aa];
-        for (int i = 0; i < n; i++) {
-            cout << v[j + i] << " "; 
-        }
-        j += n;
-        cout << endl;
-        aa++;
     }
-
-    return 0;
+    int count = 0;
+    for(int i = 0; i<s.size(); ++i){
+        for(int j = 0; j<s[i]; ++j){
+            cout << v[j+count] << " ";
+        }
+        count+=s[i];
+        cout << endl;
+    }
 }

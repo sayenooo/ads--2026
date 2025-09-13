@@ -1,36 +1,38 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-string func(string str){
-    string s;
+string func(string s){
     deque<char> q;
-    for(char c: str){
-        if(c=='#'){
-            q.pop_front();
-        }
-        if (c!='#'){
-            q.push_front(c);          
+    string ss = "";
+    for(char c:s){
+        if(c!='#'){
+            q.push_back(c);
+        }else{
+            q.pop_back();
         }
     }
     while(!q.empty()){
-        s+=q.front();
+        ss+=q.front();
         q.pop_front();
     }
 
-    return s;
+    return ss;
 }
 
 
-int main() {
-    string s1;
-    string s2;
-    cin >> s1 >> s2;
 
-    if(func(s1)==func(s2)){
-        cout << "Yes";
+
+int main() {
+    string a,b;
+    cin >> a >> b;
+    if(func(a)==func(b)){
+        cout << "YES";
     }else{
-        cout << "No";
+        cout << "NO";
     }
+
+    return 0;
+}
 
 
 

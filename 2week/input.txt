@@ -1,0 +1,12 @@
+add_front Harry_Potter
+add_back Light
+erase_front
+erase_back
+erase_front
+add_front Happy
+back
+add_back Autumn
+add_front Alchemy
+clear
+front
+exit

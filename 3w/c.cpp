@@ -1,30 +1,26 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int func(vector<long long> &v, int l1, int r1, int l2, int r2){
-    int count = 0;
-    for(int i = 0; i<v.size(); i++){
-        if((v[i]>=l1 && v[i]<=r1) || (v[i]>=l2 && v[i]<=r2)){
-            count++;
-        }
-    }
-    return count;
+long long func(vector<long long>& v, long long l, long long r) {
+    if(l>r) return 0;
+    long long left = lower_bound(v.begin(), v.end(), l) - v.begin();
+    long long right = upper_bound(v.begin(), v.end(), r) - v.begin();
+    return (long long)right - left;
 }
 
 int main() {
-    int a,b;
-    cin >> a >> b;
-    vector<long long> v(a);
-    for(int i = 0; i<a; i++){
+    int n, k;
+    cin >> n >> k;
+    vector<long long> v(n);
+    for (int i = 0; i < n; i++) {
         cin >> v[i];
     }
-    for(int i = 0; i<b; i++){
-        int l1,r1,l2,r2;
+    sort(v.begin(), v.end());
+    while (k--) {
+        long long l1, r1, l2, r2;
         cin >> l1 >> r1 >> l2 >> r2;
-        int res = func(v,l1,r1,l2,r2);
-        cout << res << endl;
+        cout << func(v, l1,r1) + func(v, l2,r2) - func(v, max(l1, l2), min(r1, r2)) << endl;
     }
 
     return 0;
-    
 }

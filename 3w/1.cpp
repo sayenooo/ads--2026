@@ -1,47 +1,26 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+long long func(vector<long long>& v, long long l, long long r) {
+    if(l>r) return 0;
+    long long left = lower_bound(v.begin(), v.end(), l) - v.begin();
+    long long right = upper_bound(v.begin(), v.end(), r) - v.begin();
+    return (long long)right - left;
+}
+
 int main() {
     int n, k;
-    cin >> n >> k; // читаем n и k
-    vector<int> v(n);
-
-    long long sumn = 0;
-    int mx = 0;
-
+    cin >> n >> k;
+    vector<long long> v(n);
     for (int i = 0; i < n; i++) {
         cin >> v[i];
-        sumn += v[i];
-        mx = max(mx, v[i]);
+    }
+    sort(v.begin(), v.end());
+    while (k--) {
+        long long l1, r1, l2, r2;
+        cin >> l1 >> r1 >> l2 >> r2;
+        cout << func(v, l1,r1) + func(v, l2,r2) - func(v, max(l1, l2), min(r1, r2)) << endl;
     }
 
-    long long l = mx;
-    long long r = sumn;
-    long long res = r;
-
-    while (l <= r) {
-        long long mid = (l + r) / 2;
-
-
-        int block = 1;
-        long long cur = 0;
-        for (int i = 0; i < n; i++) {
-            if (cur + v[i] > mid) {
-                block++;
-                cur = v[i];
-            } else {
-                cur += v[i];
-            }
-        }
-
-        if (block > k) {
-            l = mid + 1;
-        } else {
-            res = mid;
-            r = mid - 1;
-        }
-    }
-
-    cout << res;
     return 0;
 }

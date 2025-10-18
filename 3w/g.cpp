@@ -2,27 +2,47 @@
 using namespace std;
 
 int main() {
-    float n,m;
-    cin >> n >> m;
-    vector<float> v(n);
-    queue<float>q;
-    for(int i = 0; i<n; i++){
+    int n, k;
+    cin >> n >> k;
+    vector<int> v(n);
+
+    long long sumn = 0;
+    int mx = 0;
+
+    for (int i = 0; i < n; i++) {
         cin >> v[i];
-        q.push(v[i]/2);
-    }
-    float result;
-    while(!q.empty()){
-        float res = 0;
-        for(int i = 0; i<n; i++){
-            float x = ceil(v[i]/q.front());
-            res+=x;
-        }
-        if(res<=m){
-            result = q.front();
-        }
-        q.pop();
+        sumn += v[i];
+        mx = max(mx, v[i]);
     }
 
-    cout << result;
+    long long l = mx;
+    long long r = sumn;
+    long long res = r;
+
+    while (l <= r) {
+        long long mid = (l + r) / 2;
+
+
+        int block = 1;
+        long long cur = 0;
+        for (int i = 0; i < n; i++) {
+            if (cur + v[i] > mid) {
+                block++;
+                cur = v[i];
+            } else {
+                cur += v[i];
+            }
+        }
+
+        if (block > k) {
+            l = mid + 1;
+        } else {
+            res = mid;
+            r = mid - 1;
+        }
+    }
+
+    cout << res;
     return 0;
 }
+

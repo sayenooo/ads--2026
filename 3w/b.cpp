@@ -21,8 +21,6 @@ int main() {
 
     while (l <= r) {
         long long mid = (l + r) / 2;
-
-
         int block = 1;
         long long cur = 0;
         for (int i = 0; i < n; i++) {

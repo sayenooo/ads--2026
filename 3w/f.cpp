@@ -12,20 +12,20 @@ int main() {
     }
     int m;
     cin >> m;
-    vector<int> w(m);
     for(int i = 0; i<m; i++){
-        cin >> w[i];
-    }
-    for(int i = 0; i<m; i++){
+        int x;
+        cin >> x;
         int count = 0;
         int sumn = 0;
         for(int j = 0; j<n; j++){
-            if(w[i]>=v[j]){
+            if(x>=v[j]){
                 count++;
                 sumn+=v[j];
             }
         }
+
         cout << count << " " << sumn << endl;
+
     }
 
 

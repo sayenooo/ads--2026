@@ -15,24 +15,31 @@ int main() {
         mx = max(mx, v[i]);
     }
 
-    long long l = 1;
-    long long r = mx;
-    long long res = l;
+    long long l = mx;
+    long long r = sumn;
+    long long res = r;
+    int result;
 
     while (l <= r) {
         long long mid = (l + r) / 2;
-
-
         int block = 1;
+        int len;
         long long cur = 0;
         for (int i = 0; i < n; i++) {
-            sumn += (v[i] + mid - 1) / mid;
+            if (cur + v[i] > mid) {
+                len = i+1;
+                block++;
+                cur = v[i];
+            } else {
+                cur += v[i];
+            }
         }
 
-        if (sumn > k) {
+        if (block > k) {
             l = mid + 1;
         } else {
             res = mid;
+            result = len;
             r = mid - 1;
         }
     }

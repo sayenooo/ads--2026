@@ -3,14 +3,6 @@
 g++ 0.cpp -o 0
 0.exe
 
-queue <int> q;
-    for (int i = 1; i<=num; i++){
-        q.push(i)
-    }
-    while (!q.empty){
-        q.pop();
-        q.front()
-    }
         
 */
 // Lecture 1: Complexity, Memory, Factorization, Stack, Queue, Deque

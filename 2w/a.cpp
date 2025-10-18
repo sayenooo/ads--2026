@@ -7,7 +7,6 @@ int main(){
     int n;
     cin >> n;
     vector<int>v;
-    vector<int>vv;
     for(int i = 0; i<n; i++){
         int x;
         cin >> x;
@@ -15,20 +14,15 @@ int main(){
     }
     int k;
     cin >> k;
+    int minn = abs(k-v[0]);
+    int idx = 0;
     for(int i = 0; i<n; i++){
         int x = abs(k-v[i]);
-        vv.push_back(x);
-    }
-    vector<int>sorted = vv;
-    sort(sorted.begin(),sorted.end());
-    int res;
-    for(int i = 0; i<n; i++){
-        if(vv[i]==sorted[0]){
-            res = i;
-            break;
+        if(x<minn){
+            minn=x;
+            idx=i;
         }
     }
-    cout << res;
-
+    cout << idx << " ";
     return 0;
 }

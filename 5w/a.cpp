@@ -1,78 +1,69 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-class MinHeap {
-public:
-    vector<long long> a;
-    long long sumn = 0;
+class MinHeap{
+    public:
+    vector<int>a;
+    int sumn = 0;
 
-    int parent(int i) {
-        return (i - 1) / 2;
+    int parent(int i){
+        return (i-1)/2;
     }
-
-    int left(int i) {
-        return 2 * i + 1;
+    int left(int i){
+        return 2*i + 1;
     }
-
-    int right(int i) {
-        return 2 * i + 2;
+    int right(int i){
+        return 2*i + 2;
     }
-
-    long long getMin() {
-        return a[0];
-    }
-
-    void insert(long long k) {
-        a.push_back(k);
-        int ind = a.size() - 1;
-
-        while (ind > 0 && a[ind] < a[parent(ind)]) {
-            swap(a[ind], a[parent(ind)]);
-            ind = parent(ind);
+    int insert(int data){
+        a.push_back(data);
+         int idx = a.size() - 1;
+        while(idx>0 && a[idx]<a[parent(idx)]){
+            swap(a[idx],a[parent(idx)]);
+            idx = parent(idx);
         }
     }
-
-    void heapify(int i) {
-        if (left(i) > (int)a.size() - 1)
+    int getmin(){
+        return a[0];
+    }
+    void heapify(int i){
+        if(left(i)>a.size()-1){
             return;
-
+        }
         int j = left(i);
-        if (right(i) < (int)a.size() && a[right(i)] < a[left(i)])
+        if(right(i)<a.size() && a[right(i)]<a[left(i)]){
             j = right(i);
-
-        if (a[i] > a[j]) {
-            swap(a[i], a[j]);
+        }
+        if(a[i]>a[j]){
+            swap(a[i],a[j]);
             heapify(j);
         }
     }
-
-    long long extractMin() {
-        long long root_value = getMin();
-
-        swap(a[0], a[a.size() - 1]);
+    int extractMin(){
+        int minm = getmin();
+        swap(a[0],a[a.size()-1]);
         a.pop_back();
-
-        if (!a.empty())
+        if(a.size()>0){
             heapify(0);
-
-        return root_value;
+        }
+        return minm;
     }
-
-    long long extractSumn() {
+    int extractSumn() {
         if (a.size() < 2) return 0;
-        long long x = extractMin();
-        long long y = extractMin();
-        long long s = x + y;
+        int x = extractMin();
+        int y = extractMin();
+        int s = x + y;
         insert(s);
         sumn += s;
         return s;
     }
+
 };
 
 int main() {
     int n;
     cin >> n;
-    MinHeap *heap = new MinHeap();
+    MinHeap* heap = new MinHeap();
 
     for (int i = 0; i < n; i++) {
         long long x;

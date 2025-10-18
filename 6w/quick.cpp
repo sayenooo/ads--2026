@@ -1,11 +1,11 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int a[10000];
+int a[100000000];
 void quicksort(int l, int r){
-    int p = a[(l+r)/2];
     int i = l;
     int j = r;
+    int p = a[(l+r)/2];
     while(i<j){
         while(a[i]<p){
             i++;
@@ -20,20 +20,22 @@ void quicksort(int l, int r){
         }
     }
     if(l<j){
-        quicksort(l, j);
+        quicksort(l,j);
     }
     if(i<r){
-        quicksort(i, r);
+        quicksort(i,r);
     }
-
 }
 
 int main(){
     int n;
     cin >> n;
-    quicksort(0, n-1);
     for(int i = 0; i<n; i++){
         cin >> a[i];
+    }
+    quicksort(0, n-1);
+    for(int i = 0; i<n; i++){
+        cout << a[i] << " ";
     }
 
     return 0;

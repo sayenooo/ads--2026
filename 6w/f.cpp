@@ -1,6 +1,32 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+bool func(string s1, string s2){
+    return s1 < s2;
+}
+bool func1(string s1, string s2){
+    return s1 > s2;
+}
+
+void quicksort(vector<pair<double, pair<string,string>>> &a, int l, int r){
+    int i = l;
+    int j = r;
+    double p = a[(i+j)/2].first;
+    string p1 = a[(i+j)/2].second.first;
+    string p2 = a[(i+j)/2].second.second;
+    while(i <= j){
+        while(a[i].first < p || (a[i].first == p && func(a[i].second.first , p1)) || (a[i].first == p && a[i].second.first == p1 && func(a[i].second.second , p2))) i++;
+        while(a[j].first > p || (a[j].first == p && func1(a[j].second.first , p1)) || (a[j].first == p && a[j].second.first == p1 && func1(a[j].second.second , p2))) j--;
+        if(i <= j){
+            swap(a[i], a[j]);
+            i++;
+            j--;
+        }
+    }
+    if(l < j) quicksort(a, l, j);
+    if(i < r) quicksort(a, i, r);
+}
+
 int main() {
     int n;
     cin >> n;
@@ -32,13 +58,12 @@ int main() {
         }
 
         double gpa = upper / lower;
-
         mp.push_back({gpa, {fname, lname}});
     }
 
-    sort(mp.begin(), mp.end());
+    quicksort(mp, 0, mp.size() - 1);
 
-    for (auto it : mp) {
+    for (auto &it : mp) {
         cout << it.second.first << " " << it.second.second << " "
              << fixed << setprecision(3) << it.first << endl;
     }

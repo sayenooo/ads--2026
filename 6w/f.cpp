@@ -14,7 +14,7 @@ void quicksort(vector<pair<double, pair<string,string>>> &a, int l, int r){
     double p = a[(i+j)/2].first;
     string p1 = a[(i+j)/2].second.first;
     string p2 = a[(i+j)/2].second.second;
-    while(i <= j){
+    while(i < j){
         while(a[i].first < p || (a[i].first == p && func(a[i].second.first , p1)) || (a[i].first == p && a[i].second.first == p1 && func(a[i].second.second , p2))) i++;
         while(a[j].first > p || (a[j].first == p && func1(a[j].second.first , p1)) || (a[j].first == p && a[j].second.first == p1 && func1(a[j].second.second , p2))) j--;
         if(i <= j){

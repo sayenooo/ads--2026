@@ -4,78 +4,112 @@ using namespace std;
 bool func(string a, string b){
     return a<b;
 }
-void merge(vector<string> &s, int l, int r, int m){
+void merge(vector<pair<double, pair<string, string>>> &v, int l, int m, int r){
     int n1 = m - l + 1;
     int n2 = r - m;
-    vector<string> L(n1);
-    vector<string> R(n2);
+    vector<pair<int, pair<string, string>>> L(n1);
+    vector<pair<int, pair<string, string>>> R(n2);
     for(int i = 0; i<n1; i++){
-        L[i] = s[l+i];
+        L[i] = v[i+l];
     }
     for(int i = 0; i<n2; i++){
-        R[i] = s[m+1+i];
+        R[i] = v[i+m+1];
     }
     int uk1 = 0;
     int uk2 = 0;
     int k = l;
     while(uk1<n1 && uk2<n2){
-        if(L[uk1].size() < R[uk2].size()){
-            s[k] = L[uk1];
-            uk1++;
-        }else if(L[uk1].size() > R[uk2].size()){
-            s[k] = R[uk2];
+        if(L[uk1].first>R[uk2].first){
+            v[k] = L[uk1];
+            uk1++; 
+        }else if(L[uk1].first<R[uk2].first){
+            v[k] = R[uk2];
             uk2++;
-        }else{
-            if(func(L[uk1],R[uk2])){
-                s[k] = L[uk1];
+        }else if(L[uk1].second.first != R[uk2].second.first){
+            if(func(L[uk1].second.first, R[uk2].second.first)){
+                v[k] = L[uk1];
                 uk1++;
-            }else{
-                s[k] = R[uk2];
-                uk2++;
             }
+            else{
+                v[k] = R[uk2];
+                uk2++;
+            } 
+        }else{
+            if(func(L[uk1].second.second, R[uk2].second.second)){
+                v[k] = L[uk1];
+                uk1++;
+            }
+            else{
+                v[k] = R[uk2];
+                uk2++;
+            } 
         }
+
         k++;
     }
     while(uk1<n1){
-        s[k] = L[uk1];
-        uk1++;
+        v[k] = L[uk1];
+        uk1++; 
         k++;
     }
     while(uk2<n2){
-        s[k] = R[uk2];
-        uk2++;
+        v[k] = R[uk2];
+        uk2++; 
         k++;
     }
 }
-void mergesort(vector<string> &s, int l, int r){
+
+void mergesort(vector<pair<double, pair<string, string>>> v, int l, int r){
     if(l<r){
         int m = (l+r)/2;
-        mergesort(s, l, m);
-        mergesort(s, m+1, r);
-        merge(s, l, r, m);
+        mergesort(v, l, m);
+        mergesort(v, m+1, r);
+        merge(v, l, m, r);
     }
 }
 
 int main(){
+    map<string,double> m;
+    m["A+"] = 4.00;
+    m["A"]  = 3.75;
+
+    m["B+"] = 3.25;
+    m["B"]  = 3.00;
+
+    m["C+"] = 2.50;
+    m["C"]  = 2.25;
+
+    m["D+"] = 1.75;
+    m["D"]  = 1.50;
+
+    m["F"]  = 0.00;
+
     int n;
     cin >> n;
-    cin.ignore();
-    vector<string>a;
-
+    vector<pair<double, pair<string, string>>> v;
     for(int i = 0; i<n; i++){
-        a.clear();
-        string ss;
-        getline(cin, ss);
-        stringstream s(ss);
-        string c;
-        while(s >> c){
-            a.push_back(c);
+        string fname, lname;
+        cin >> fname >> lname;
+        double num;
+        cin >> num;
+        double sumn = 0;
+        double numm = 0;
+        for(int j = 0; j<num; j++){
+            string mark;
+            cin >> mark;
+            double a;
+            cin >> a;
+            sumn += m[mark]*a;
+            numm+=a;
         }
-        mergesort(a, 0, a.size() - 1);
-        for(int i = 0; i<a.size(); i++){
-            cout << a[i] << " ";
-        }
-        cout << endl;
+        double overall = sumn/numm;
+        v.push_back({overall, {lname, fname}});
     }
+    mergesort(v, 0, n - 1);
+    cout << endl;
+    for(int i = 0; i<n; i++){
+        cout << v[i].second.second << " " << v[i].second.first << " " << fixed <<  setprecision(3) << v[i].first << endl;
+    }
+    
     return 0;
 }

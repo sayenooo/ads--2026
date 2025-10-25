@@ -1,38 +1,76 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-bool func(string s1, string s2){
-    return s1 < s2;
-}
-bool func1(string s1, string s2){
-    return s1 > s2;
+bool func(string a, string b){
+    return a < b;
 }
 
-void quicksort(vector<pair<double, pair<string,string>>> &a, int l, int r){
-    int i = l;
-    int j = r;
-    double p = a[(i+j)/2].first;
-    string p1 = a[(i+j)/2].second.first;
-    string p2 = a[(i+j)/2].second.second;
-    while(i <= j){
-        while(a[i].first < p || (a[i].first == p && func(a[i].second.first , p1)) || (a[i].first == p && a[i].second.first == p1 && func(a[i].second.second , p2))) i++;
-        while(a[j].first > p || (a[j].first == p && func1(a[j].second.first , p1)) || (a[j].first == p && a[j].second.first == p1 && func1(a[j].second.second , p2))) j--;
-        if(i <= j){
-            swap(a[i], a[j]);
-            i++;
-            j--;
-        }
+void merge(vector<pair<double, pair<string, string>>> &v, int l, int m, int r){
+    int n1 = m - l + 1;
+    int n2 = r - m;
+    vector<pair<double, pair<string, string>>> L(n1);
+    vector<pair<double, pair<string, string>>> R(n2);
+    for(int i = 0; i < n1; i++){
+        L[i] = v[l + i];
     }
-    if(l < j) quicksort(a, l, j);
-    if(i < r) quicksort(a, i, r);
+    for(int i = 0; i < n2; i++){
+        R[i] = v[m + 1 + i];
+    }
+
+    int uk1 = 0, uk2 = 0, k = l;
+    while(uk1 < n1 && uk2 < n2){
+        if(L[uk1].first < R[uk2].first){
+            v[k] = L[uk1];
+            uk1++;
+        }
+        else if(L[uk1].first > R[uk2].first){
+            v[k] = R[uk2];
+            uk2++;
+        }
+        else if(L[uk1].second.first != R[uk2].second.first){
+            if(func(L[uk1].second.first, R[uk2].second.first)){
+                v[k] = L[uk1];
+                uk1++;
+            } else {
+                v[k] = R[uk2];
+                uk2++;
+            }
+        }
+        else{
+            if(func(L[uk1].second.second, R[uk2].second.second)){
+                v[k] = L[uk1];
+                uk1++;
+            } else {
+                v[k] = R[uk2];
+                uk2++;
+            }
+        }
+        k++;
+    }
+
+    while(uk1 < n1){
+        v[k] = L[uk1];
+        uk1++;
+        k++;
+    }
+    while(uk2 < n2){
+        v[k] = R[uk2];
+        uk2++;
+        k++;
+    }
 }
 
-int main() {
-    int n;
-    cin >> n;
-    vector<pair<double, pair<string,string>>> mp;
-    map<string,double> m;
+void mergesort(vector<pair<double, pair<string, string>>> &v, int l, int r){
+    if(l < r){
+        int m = (l + r) / 2;
+        mergesort(v, l, m);
+        mergesort(v, m + 1, r);
+        merge(v, l, m, r);
+    }
+}
 
+int main(){
+    map<string,double> m;
     m["A+"] = 4.00;
     m["A"]  = 3.75;
     m["B+"] = 3.50;
@@ -43,29 +81,31 @@ int main() {
     m["D"]  = 1.00;
     m["F"]  = 0.00;
 
-    for(int i = 0; i < n; i++) {
+    int n;
+    cin >> n;
+    vector<pair<double, pair<string, string>>> v;
+    for(int i = 0; i < n; i++){
         string fname, lname;
+        cin >> lname >> fname;
         int num;
-        cin >> fname >> lname >> num;
-
-        double upper = 0, lower = 0;
-        for(int j = 0; j < num; j++) {
+        cin >> num;
+        double sum = 0, total = 0;
+        for(int j = 0; j < num; j++){
             string mark;
             int credit;
             cin >> mark >> credit;
-            upper += m[mark] * credit;
-            lower += credit;
+            sum += m[mark] * credit;
+            total += credit;
         }
-
-        double gpa = upper / lower;
-        mp.push_back({gpa, {fname, lname}});
+        double overall = sum / total;
+        v.push_back({overall, {lname, fname}});
     }
 
-    quicksort(mp, 0, mp.size() - 1);
+    mergesort(v, 0, n - 1);
 
-    for (auto &it : mp) {
-        cout << it.second.first << " " << it.second.second << " "
-             << fixed << setprecision(3) << it.first << endl;
+    for(int i = 0; i < n; i++){
+        cout << v[i].second.first << " " << v[i].second.second << " "
+             << fixed << setprecision(3) << v[i].first << endl;
     }
 
     return 0;

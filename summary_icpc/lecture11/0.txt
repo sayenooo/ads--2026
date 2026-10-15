@@ -1,0 +1,6 @@
+DFS
+Data Structure	    Stack (LIFO) or recursion
+Traversal	        Depth first
+Shortest Path	    No
+Space	            O(V)	
+Time	            O(V + E)	

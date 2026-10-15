@@ -1,0 +1,6 @@
+BFS
+Data Structure	    Queue (FIFO)	
+Traversal	        Level by level	
+Shortest Path	    Yes (unweighted)	
+Space	            O(V)	
+Time	            O(V + E)	

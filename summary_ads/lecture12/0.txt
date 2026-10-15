@@ -1,0 +1,5 @@
+Kruskal
+Complexity   O(E \log E)
+
+Prim
+Complexity   O(E \log V) or O(V^2)

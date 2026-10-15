@@ -1,0 +1,10 @@
+BST
+
+
+             Average        Worst 	    Best Case
+Search	     O(log n)	    O(n)	    O(1)
+Insert	     O(log n)	    O(n)	    O(1)
+Delete	     O(log n)	    O(n)	    O(1)
+Find Min	 O(log n)	    O(n)	    O(1)
+Find Max	 O(log n)	    O(n)	    O(1)
+Traversal	 O(n)	        O(n)	    O(n)

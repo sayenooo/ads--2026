@@ -1,0 +1,5 @@
+Rabin-Karp
+
+Time Complexity	    O(n + m) average, O(n×m) worst
+Space	            O(n) 
+Implementation	    Hash function

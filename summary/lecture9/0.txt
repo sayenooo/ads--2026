@@ -1,0 +1,5 @@
+KMP
+
+Time Complexity	    O(n + m) 
+Space	            O(n + m)
+Implementation	    Prefix function

@@ -1,0 +1,6 @@
+Merge sort
+
+	            Time Complexity	      Space Complexity
+Best Case	    O(n log n)	          O(n)
+Average Case	O(n log n)	          O(n)
+Worst Case	    O(n log n)	          O(n)

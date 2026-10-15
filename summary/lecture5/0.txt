@@ -1,0 +1,8 @@
+MinHeap & MaxHeap
+
+
+	           Array     Sortdarr   LinkedList	    Min-Heap
+Find Min	   O(n)	     O(1)	    O(n)	        O(1)
+Extract Min	   O(n)	     O(n)	    O(n)	        O(log n)
+Insert	       O(1)	     O(n)	    O(1)	        O(log n)
+Sort	       O(nlog n)	        O(nlog n)       O(nlog n)

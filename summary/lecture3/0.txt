@@ -1,0 +1,7 @@
+Binary search 
+
+Time Complexity: O(log n)
+
+Find specific elem   	 while (l <= r)
+First element ≥ x	     while (l < r)
+First element > x	     while (l < r)
